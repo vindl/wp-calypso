@@ -193,10 +193,23 @@ export function useShoppingCart(
 		setCacheStatus( 'invalid' );
 	}, [] );
 
-	const changePlanLength = ( planItem, planLength ) => {
-		// TODO: change plan length
-		debug( 'changing plan length in cart', planItem, planLength );
-	};
+	const changeItemVariant: ( WPCOMCartItem, WPCOMProductSlug, number ) => void = useCallback(
+		( itemToChange, newProductSlug, newProductId ) => {
+			debug( 'changing item variant in cart to', newProductSlug, itemToChange );
+			setResponseCart( currentResponseCart => ( {
+				...currentResponseCart,
+				products: currentResponseCart.products.map( ( item, index ) => {
+					if ( index.toString() === itemToChange.wpcom_meta.uuid ) {
+						item.product_slug = newProductSlug;
+						item.product_id = newProductId;
+					}
+					return item;
+				} ),
+			} ) );
+			setCacheStatus( 'invalid' );
+		},
+		[]
+	);
 
 	const updatePricesForAddress = address => {
 		// TODO: updatePricesForAddress
@@ -213,7 +226,7 @@ export function useShoppingCart(
 		allowedPaymentMethods: cart.allowedPaymentMethods,
 		addItem,
 		removeItem,
-		changePlanLength,
+		changeItemVariant,
 		updatePricesForAddress,
 	} as ShoppingCartManager;
 }

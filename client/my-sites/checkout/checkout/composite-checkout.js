@@ -114,7 +114,7 @@ export default function CompositeCheckout( {
 		credits,
 		removeItem,
 		addItem,
-		changePlanLength,
+		changeItemVariant,
 		errors,
 		isLoading,
 		allowedPaymentMethods: serverAllowedPaymentMethods,
@@ -216,7 +216,7 @@ export default function CompositeCheckout( {
 			>
 				<WPCheckout
 					removeItem={ removeItem }
-					changePlanLength={ changePlanLength }
+					changePlanLength={ changeItemVariant }
 					siteId={ siteId }
 					siteUrl={ siteSlug }
 					CountrySelectMenu={ CountrySelectMenu }
