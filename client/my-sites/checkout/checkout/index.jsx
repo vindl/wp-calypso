@@ -114,6 +114,13 @@ export class Checkout extends React.Component {
 		clearPurchases: PropTypes.func.isRequired,
 		fetchReceiptCompleted: PropTypes.func.isRequired,
 		previousRoute: PropTypes.string.isRequired,
+		performRedirectTo: PropTypes.func,
+		performRedirectAndReplaceUrlTo: PropTypes.func,
+	};
+
+	static defaultProps = {
+		performRedirectTo: url => page( url ),
+		performRedirectAndReplaceUrlTo: url => page.redirect( url ),
 	};
 
 	state = {
@@ -355,7 +362,7 @@ export class Checkout extends React.Component {
 			);
 		}
 
-		page.redirect( redirectTo );
+		this.props.performRedirectAndReplaceUrlTo( redirectTo );
 
 		return true;
 	}
@@ -755,7 +762,7 @@ export class Checkout extends React.Component {
 				fetchSitesAndUser(
 					domainName,
 					() => {
-						page( redirectPath );
+						this.props.performRedirectTo( redirectPath );
 					},
 					reduxStore
 				);
@@ -764,7 +771,7 @@ export class Checkout extends React.Component {
 			}
 		}
 
-		page( redirectPath );
+		this.props.performRedirectTo( redirectPath );
 	};
 
 	content() {
