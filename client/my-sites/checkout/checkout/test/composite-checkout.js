@@ -6,7 +6,8 @@
  */
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import { Provider as ReduxProvider } from 'react-redux';
 import '@testing-library/jest-dom/extend-expect'; // eslint-disable-line import/no-extraneous-dependencies
 import { mockSetCartEndpoint, mockGetCartEndpointWith } from '@automattic/composite-checkout-wpcom';
@@ -85,10 +86,14 @@ describe( 'CompositeCheckout', () => {
 			},
 		];
 
-		const store = createStore( () => ( {
-			plans: { items: [] },
-			sites: { items: {} },
-		} ) );
+		const store = applyMiddleware( thunk )( createStore )( () => {
+			return {
+				plans: { items: [] },
+				sites: { items: {} },
+				productsList: { items: [] },
+				countries: { payments: countryList, domains: countryList },
+			};
+		} );
 
 		MyCheckout = () => (
 			<ReduxProvider store={ store }>
