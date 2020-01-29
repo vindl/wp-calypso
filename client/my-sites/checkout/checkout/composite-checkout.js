@@ -198,6 +198,11 @@ export default function CompositeCheckout( {
 		);
 	};
 
+	const getItemVariants = useWpcomProductVariants( {
+		siteId,
+		productSlug: getPlanProductSlugs( items )[ 0 ],
+	} );
+
 	return (
 		<React.Fragment>
 			<TestingBanner />
@@ -223,6 +228,7 @@ export default function CompositeCheckout( {
 					countriesList={ countriesList }
 					StateSelect={ StateSelect }
 					renderDomainContactFields={ renderDomainContactFields }
+					getItemVariants={ getItemVariants }
 				/>
 			</CheckoutProvider>
 		</React.Fragment>
