@@ -45,6 +45,7 @@ export interface ShoppingCartManager {
 	credits: CheckoutCartItem;
 	addItem: ( WPCOMCartItem ) => void;
 	removeItem: ( WPCOMCartItem ) => void;
+	variantRequestStatus: VariantRequestStatus;
 }
 
 /**
@@ -58,6 +59,18 @@ export interface ShoppingCartManager {
  *   - 'error': Something went wrong.
  */
 type CacheStatus = 'fresh' | 'valid' | 'invalid' | 'pending' | 'error';
+
+/**
+ * Possible states re. variant selection. Note that all variant
+ * change requests share the same state; this means if there is more
+ * than one item in the cart with variant options they will all be in
+ * pending state at the same time. Right now this is moot because at most
+ * one cart item (the plan, if it exists) can have a variant picker.
+ * If later we want to allow variations on more than one cart item
+ * It should be straightforward to adjust the type of ShoppingCartManager
+ * to accommodate this. For now the extra complexity is not worth it.
+ */
+export type VariantRequestStatus = 'fresh' | 'pending' | 'valid' | 'error';
 
 /**
  * Custom hook for managing state in the WPCOM checkout component.
@@ -115,6 +128,12 @@ export function useShoppingCart(
 	// in e.g. useEffect because this causes an infinite loop.
 	const [ cacheStatus, setCacheStatus ] = useState< CacheStatus >( 'fresh' );
 
+	// Used to allow updating the view immediately upon a variant
+	// change request.
+	const [ variantRequestStatus, setVariantRequestStatus ] = useState< VariantRequestStatus >(
+		'fresh'
+	);
+
 	// Asynchronously initialize the cart. This should happen exactly once.
 	useEffect( () => {
 		const initializeResponseCart = async () => {
@@ -142,6 +161,12 @@ export function useShoppingCart(
 			const response = await setServerCart( prepareRequestCart( responseCart ) );
 			debug( 'cart sent; new responseCart is', response );
 			setResponseCart( response );
+
+			if ( variantRequestStatus === 'pending' ) {
+				// TODO: do we need to handle the case where the variant doesn't actually change?
+				setVariantRequestStatus( 'valid' );
+			}
+
 			setCacheStatus( 'valid' );
 		};
 
@@ -195,6 +220,11 @@ export function useShoppingCart(
 
 	const changeItemVariant: ( WPCOMCartItem, WPCOMProductSlug, number ) => void = useCallback(
 		( itemToChange, newProductSlug, newProductId ) => {
+			if ( variantRequestStatus === 'pending' ) {
+				debug( `variant request status is '${ variantRequestStatus }'; not submitting again` );
+				return;
+			}
+
 			debug( 'changing item variant in cart to', newProductSlug, itemToChange );
 			setResponseCart( currentResponseCart => ( {
 				...currentResponseCart,
@@ -207,8 +237,9 @@ export function useShoppingCart(
 				} ),
 			} ) );
 			setCacheStatus( 'invalid' );
+			setVariantRequestStatus( 'pending' );
 		},
-		[]
+		[ variantRequestStatus ]
 	);
 
 	const updatePricesForAddress = address => {
@@ -228,5 +259,6 @@ export function useShoppingCart(
 		removeItem,
 		changeItemVariant,
 		updatePricesForAddress,
+		variantRequestStatus,
 	} as ShoppingCartManager;
 }
