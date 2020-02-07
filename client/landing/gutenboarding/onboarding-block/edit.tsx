@@ -5,7 +5,7 @@ import { __ as NO__ } from '@wordpress/i18n';
 import { BlockEditProps } from '@wordpress/blocks';
 import { useSelect } from '@wordpress/data';
 import React, { FunctionComponent, ReactElement } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useParams, Switch, Route } from 'react-router-dom';
 
 /**
  * Internal dependencies
@@ -28,51 +28,47 @@ const OnboardingEdit: FunctionComponent< BlockEditProps< Attributes > > = () => 
 		select( STORE_KEY ).getState()
 	);
 
-	const { step: currentStep, lang } = useParams();
-
-	let stepComponent: ReactElement;
-	switch ( currentStep ) {
-		case Step.IntentGathering:
-			stepComponent = <AcquireIntent />;
-			break;
-
-		case Step.DesignSelection:
-			stepComponent = ! siteVertical ? (
-				<Redirect to={ makePath( Step.IntentGathering, lang ) } />
-			) : (
-				<DesignSelector />
-			);
-			break;
-
-		case Step.PageSelection:
-			stepComponent = ! selectedDesign ? (
-				<Redirect to={ makePath( Step.DesignSelection, lang ) } />
-			) : (
-				<DesignSelector showPageSelector={ true } />
-			);
-			break;
-
-		case Step.Signup:
-			stepComponent = <SignupForm />;
-			break;
-
-		case Step.CreateSite:
-			stepComponent = ! isCreatingSite ? (
-				<Redirect to={ makePath( Step.IntentGathering, lang ) } />
-			) : (
-				<CreateSite />
-			);
-			break;
-
-		default:
-			stepComponent = <Redirect to={ makePath( Step.IntentGathering, lang ) } />;
-			break;
-	}
+	const { lang } = useParams();
 
 	return (
 		<>
 			<VerticalBackground />
-			{ stepComponent }
+			<Switch>
+				<Route path={ makePath( Step.IntentGathering ) }>
+					<AcquireIntent />
+				</Route>
+
+				<Route path={ makePath( Step.DesignSelection ) }>
+					{ ! siteVertical ? (
+						<Redirect to={ makePath( Step.IntentGathering, lang ) } />
+					) : (
+						<DesignSelector />
+					) }
+				</Route>
+
+				<Route path={ makePath( Step.PageSelection ) }>
+					{ ! selectedDesign ? (
+						<Redirect to={ makePath( Step.DesignSelection, lang ) } />
+					) : (
+						<DesignSelector showPageSelector={ true } />
+					) }
+				</Route>
+
+				<Route path={ makePath( Step.Signup ) }>
+					<SignupForm />;
+				</Route>
+
+				<Route path={ makePath( Step.CreateSite ) }>
+					{ ! isCreatingSite ? (
+						<Redirect to={ makePath( Step.IntentGathering, lang ) } />
+					) : (
+						<CreateSite />
+					) }
+				</Route>
+				<Route>
+					<Redirect to={ makePath( Step.IntentGathering, lang ) } />;
+				</Route>
+			</Switch>
 		</>
 	);
 };
