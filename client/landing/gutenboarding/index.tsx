@@ -36,7 +36,6 @@ window.AppBoot = () => {
 					<Route exact path={ path }>
 						<Gutenboard />
 					</Route>
-					{ /* TODO: Add a redirect keeping step without lang if lang is unrecognized */ }
 					<Route>
 						<Redirect to={ makePath( Step.IntentGathering ) } />
 					</Route>
