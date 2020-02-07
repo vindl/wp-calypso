@@ -10,8 +10,8 @@ import { partition } from 'lodash';
 import { Portal } from 'reakit/Portal';
 import { useDialogState, Dialog, DialogBackdrop } from 'reakit/Dialog';
 import { useSpring, animated } from 'react-spring';
-import { useHistory } from 'react-router-dom';
-import { Step } from '../../steps';
+import { useHistory, useParams } from 'react-router-dom';
+import { Step, makePath } from '../../path';
 
 /**
  * Internal dependencies
@@ -92,6 +92,7 @@ const DesignSelector: FunctionComponent< Props > = ( { showPageSelector = false 
 	} );
 
 	const history = useHistory();
+	const { lang } = useParams();
 
 	return (
 		<animated.div style={ designSelectorSpring }>
@@ -131,7 +132,7 @@ const DesignSelector: FunctionComponent< Props > = ( { showPageSelector = false 
 							onClick={ () => {
 								window.scrollTo( 0, 0 );
 								setSelectedDesign( design );
-								history.push( Step.PageSelection );
+								history.push( makePath( Step.PageSelection, lang ) );
 							} }
 						/>
 					) ) }

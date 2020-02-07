@@ -5,9 +5,9 @@
 		// Must be used with babel typescript
 		"isolatedModules": true,
 
-		"baseUrl": ".",
+		"baseUrl": "../..",
 		"paths": {
-			"*": [ "*", "../../*" ]
+			"*": [ "*" ]
 		}
 	}
 }
