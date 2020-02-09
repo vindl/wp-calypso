@@ -4070,7 +4070,28 @@
     jest-matcher-utils "^24.7.0"
     lodash "^4.17.15"
 
-"@wordpress/jest-preset-default@5.3.1", "@wordpress/jest-preset-default@^5.3.1":
+"@wordpress/jest-console@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/jest-console/-/jest-console-3.5.0.tgz#b31bbfbc4451687eadfefea1fda048c3d5fabf88"
+  integrity sha512-RzzVORieEtgiGs+YLlMw16seYVKQ4QD0PWoSYWGyQHUMRV8c+DdEwYIkJ9PpX2lTj//yBAeymzfAK4hNswBUgg==
+  dependencies:
+    "@babel/runtime" "^7.8.3"
+    jest-matcher-utils "^24.7.0"
+    lodash "^4.17.15"
+
+"@wordpress/jest-preset-default@5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/jest-preset-default/-/jest-preset-default-5.4.0.tgz#8b0020f31cf0e6580339ed909ac6270ca7168d76"
+  integrity sha512-+7zlgPB57jxlVHQ2Vg0bbYYcJozc+YbBocHZ2ZQlQC5IUXHJ2IZDPGb6kUAWGCNXy/1MzFIMEa0znjxG5zc1Fg==
+  dependencies:
+    "@jest/reporters" "^24.8.0"
+    "@wordpress/jest-console" "^3.5.0"
+    babel-jest "^24.9.0"
+    enzyme "^3.9.0"
+    enzyme-adapter-react-16 "^1.10.0"
+    enzyme-to-json "^3.3.5"
+
+"@wordpress/jest-preset-default@^5.3.1":
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/@wordpress/jest-preset-default/-/jest-preset-default-5.3.1.tgz#32d85bee706c1be881d15e6ad7ed1ccc87490b69"
   integrity sha512-KXfdPPc9DwlZC3FYCPNLS4yTp4ezq7uRCPxC/SAdbx82omHgyScJYvAc0HF5sm3m6zFDQ3a8VBm74mvPZx9ONA==
