@@ -721,7 +721,7 @@ If ESLint encounters any issues inside any .jsx or .js files you have updated, a
 To lint the entire project, from the root of your working directory run:
 
 ```bash
-npm run lint:js
+yarn run lint:js
 ```
 
 

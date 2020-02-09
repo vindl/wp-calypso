@@ -34,10 +34,10 @@ in the root of the repository to get the required `devDependencies`.
 
 ### Tests
 
-```npm run test-packages```
+```yarn run test-packages```
 
-```npm run test-packages:watch```
+```yarn run test-packages:watch```
 
 ### Using [Storybook](https://storybook.js.org/)
 
-```npm run components:storybook:start```
+```yarn run components:storybook:start```

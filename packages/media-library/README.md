@@ -24,11 +24,11 @@ Run `npm install` in the root of the repository to get the required `devDependen
 
 Run the following commands in the root of the repositry to run the tests.
 
-```npm run test-packages```
+```yarn run test-packages```
 
-```npm run test-packages:watch```
+```yarn run test-packages:watch```
 
 ### Development
 
-Run `npm run media-library:storybook:start` in the root of the repository to run the [Storybook](https://storybook.js.org/).
+Run `yarn run media-library:storybook:start` in the root of the repository to run the [Storybook](https://storybook.js.org/).
 

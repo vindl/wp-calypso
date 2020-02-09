@@ -11,7 +11,7 @@ If you don't edit `package.json` directly, you shouldn't need to do anything. Fo
 the `package-lock.json` file will be updated automatically.
 
 If you edit `package.json` manually, or you want to bump all our transitive dependencies to their most recent version,
-you'll need to run `npm run update-deps` (that will take a while). Internally, the script does the following:
+you'll need to run `yarn run update-deps` (that will take a while). Internally, the script does the following:
 - Deletes local `node_modules` folders in all packages
 - Deletes your local copy of `package-lock.json`
 - Runs `npm install`
@@ -21,6 +21,6 @@ you'll need to run `npm run update-deps` (that will take a while). Internally, t
 
 To verify that the new `package-lock.json` works:
 
-- Run `npm run distclean` to delete local `node_modules`
+- Run `yarn run distclean` to delete local `node_modules`
 - Run `npm ci`
 - Verify that Calypso works as expected and that tests pass

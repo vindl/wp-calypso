@@ -106,7 +106,7 @@ module.exports = getWebpackConfig;
 
 ## Advanced Usage: Use own Babel Config
 
-It is also possible to customize how Babel transpiles a project. Simply add a `babel.config.js` to your project's root (i.e. the location you call `npm run build` from), and the build tool will pick it up over its own `babel.config.js` to transpile your project.
+It is also possible to customize how Babel transpiles a project. Simply add a `babel.config.js` to your project's root (i.e. the location you call `yarn run build` from), and the build tool will pick it up over its own `babel.config.js` to transpile your project.
 
 To extend the default behavior provided by `@automattic/calypso-build`, you can use presets found in its `babel/` directory, and add your own presets and/or plugins, e.g.
 
