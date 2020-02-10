@@ -439,6 +439,9 @@ class RegisterDomainStep extends React.Component {
 							onSearchChange={ this.onSearchChange }
 							placeholder={ this.getPlaceholderText() }
 							ref={ this.bindSearchCardReference }
+							showDesignUpdate={ this.props.showDesignUpdate }
+							filters={ this.state.filters }
+							onToggleChange={ this.onFiltersChange }
 						/>
 						{ this.renderSearchFilters() }
 					</CompactCard>
@@ -469,6 +472,10 @@ class RegisterDomainStep extends React.Component {
 	}
 
 	renderSearchFilters() {
+		if ( this.props.showDesignUpdate ) {
+			return;
+		}
+
 		const isKrackenUi =
 			config.isEnabled( 'domains/kracken-ui/dashes-filter' ) ||
 			config.isEnabled( 'domains/kracken-ui/exact-match-filter' ) ||
