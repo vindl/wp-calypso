@@ -100,9 +100,9 @@ references:
     paths:
       - '.git'
 
-  # npm cache
+  # yarn cache
   #
-  # npm caches the modules it installs in ~/.npm.
+  # yarn caches the modules it installs in ~/.cache/yarn.
   # We cache that cache to save time pulling modules from the network.
   #
   #
@@ -111,26 +111,26 @@ references:
   #   - https://github.com/Automattic/wp-calypso/pull/25487
   #   - https://github.com/Automattic/wp-calypso/pull/27180
   #
-  # More about the CircleCI cache: https://circleci.com/docs/2.0/caching
-  restore-npm-cache: &restore-npm-cache
-    name: 'Restore npm cache'
+  # More about the CircleCI cache: https://circleci.com/docs/2.0/caching and https://circleci.com/docs/2.0/yarn/
+  restore-yarn-cache: &restore-yarn-cache
+    name: 'Restore yarn cache'
     keys:
-      - v{{ .Environment.GLOBAL_CACHE_PREFIX }}-node-modules-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
-      - v{{ .Environment.GLOBAL_CACHE_PREFIX }}-node-modules-{{ checksum ".nvmrc" }}
+      - v{{ .Environment.GLOBAL_CACHE_PREFIX }}-yarn-modules-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
+      - v{{ .Environment.GLOBAL_CACHE_PREFIX }}-yarn-modules-{{ checksum ".nvmrc" }}
 
-  npm-install: &npm-install
+  yarn-install: &yarn-install
     environment:
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
     name: Install dependencies
     command: yarn install --immutable
 
-  save-npm-cache: &save-npm-cache
-    name: 'Save node_modules cache'
-    key: v{{ .Environment.GLOBAL_CACHE_PREFIX }}-node-modules-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
+  save-yarn-cache: &save-yarn-cache
+    name: 'Save yarn cache'
+    key: v{{ .Environment.GLOBAL_CACHE_PREFIX }}-yarn-modules-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
     paths:
       - ~/.cache/yarn
-  npm-e2e-install: &npm-e2e-install
-    name: Install e2e npm dependencies
+  yarn-e2e-install: &yarn-e2e-install
+    name: Install e2e yarn dependencies
     command: |
       cd test/e2e &&
       CHROMEDRIVER_VERSION=$(<.chromedriver_version) yarn install --immutable
@@ -196,11 +196,11 @@ jobs:
       - checkout
       - run: *update-git-master
       - save_cache: *save-git-cache
-      # npm dependencies
-      - restore_cache: *restore-npm-cache
-      - run: *npm-install
-      - run: *npm-e2e-install
-      - save_cache: *save-npm-cache
+      # yarn dependencies
+      - restore_cache: *restore-yarn-cache
+      - run: *yarn-install
+      - run: *yarn-e2e-install
+      - save_cache: *save-yarn-cache
       - run: yarn run build-packages
       - persist_to_workspace:
           root: '~'
