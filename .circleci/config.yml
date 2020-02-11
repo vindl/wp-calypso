@@ -122,7 +122,7 @@ references:
     environment:
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
     name: Install dependencies
-    command: yarn install --frozen-lockfile
+    command: yarn install --immutable
 
   save-npm-cache: &save-npm-cache
     name: 'Save node_modules cache'
@@ -133,7 +133,7 @@ references:
     name: Install e2e npm dependencies
     command: |
       cd test/e2e &&
-      CHROMEDRIVER_VERSION=$(<.chromedriver_version) yarn install --frozen-lockfile
+      CHROMEDRIVER_VERSION=$(<.chromedriver_version) yarn install --immutable
 
   # Babel cache
   # More about the CircleCI cache: https://circleci.com/docs/2.0/caching
