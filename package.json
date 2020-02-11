@@ -57,7 +57,8 @@
 	},
 	"engines": {
 		"node": "^12.13.1",
-		"npm": "^6.12.1"
+		"npm": "^6.12.1",
+		"yarn": "^1.22.0"
 	},
 	"scripts": {
 		"preanalyze-bundles": "cross-env-shell NODE_ENV=production CALYPSO_ENV=production EMIT_STATS=true PROGRESS=true yarn run -s build-client-evergreen",
