@@ -3,5 +3,5 @@
 	"version": "independent",
 	"npmClient": "yarn",
 	"useWorkspaces": true,
-	"ignoreChanges": [ "**/*.md", "**/.eslintrc.{js,json,yaml,yml}", "**/package-lock.json" ]
+	"ignoreChanges": [ "**/*.md", "**/.eslintrc.{js,json,yaml,yml}" ]
 }
