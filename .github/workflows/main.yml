@@ -2,6 +2,9 @@ on:
   push:
     paths:
     - 'apps/full-site-editing/full-site-editing-plugin/**'
+  pull_request:
+    paths:
+    - 'apps/full-site-editing/full-site-editing-plugin/**'
 
 name: Build Full Site Editing plugin
 
