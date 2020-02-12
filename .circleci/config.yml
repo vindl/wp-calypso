@@ -461,6 +461,7 @@ jobs:
             # This block should not cause a test failure and block PRs.
             # The shell should never error and exit 0 to indicate success.
             #
+            exit 1
             set +o errexit
             npm run build-css                                                                       \
               && npm run preanalyze-bundles                                                         \
