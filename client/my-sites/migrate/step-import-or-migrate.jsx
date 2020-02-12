@@ -122,7 +122,7 @@ class StepImportOrMigrate extends Component {
 					/>
 					<div className="migrate__buttons-wrapper">
 						{ this.state.chosenImportType === 'everything' ? (
-							<Button primary onClick={ this.props.onJetpackSelect }>
+							<Button primary onClick={ this.onJetpackSelect }>
 								Continue
 							</Button>
 						) : null }
